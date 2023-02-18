@@ -11,6 +11,7 @@ provider "github" {
   token = var.github_token
 }
 
+# Defines a template repo that we use to cookie-cutter our terraform module repos
 resource "github_repository" "terraform_module_template" {
   name        = "terraform-module-template"
   description = "A template repo used for creating terraform module repos"
@@ -29,3 +30,19 @@ resource "github_repository" "terraform_demo" {
     prevent_destroy = true
   }
 }
+
+resource "github_branch_protection" "terraform_demo_protection" {
+  repository_id  = github_repository.terraform_demo.name
+  pattern        = "main"
+  enforce_admins = false
+
+  required_status_checks {
+    strict   = false
+    contexts = ["lint"]
+  }
+
+  required_pull_request_reviews {
+    dismiss_stale_reviews = true
+  }
+}
+

@@ -29,3 +29,62 @@ resource "aws_organizations_organization" "management" {
   ]
   feature_set = "ALL"
 }
+
+# We may apply different standard to development accounts VS Protected accounts. Create OU hierarchy
+resource "aws_organizations_organizational_unit" "development" {
+  name      = "development"
+  parent_id = aws_organizations_organization.management.roots[0].id
+}
+
+resource "aws_organizations_organizational_unit" "protected" {
+  name      = "protected"
+  parent_id = aws_organizations_organization.management.roots[0].id
+}
+
+resource "aws_organizations_account" "production" {
+  email     = "conzymaher+demo-production@gmail.com"
+  name      = "conzy-demo-production"
+  parent_id = aws_organizations_organizational_unit.protected.id
+  tags = {
+    environment = "production"
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_organizations_account" "staging" {
+  email     = "conzymaher+demo-staging@gmail.com"
+  name      = "conzy-demo-staging"
+  parent_id = aws_organizations_organizational_unit.protected.id
+  tags = {
+    environment = "staging"
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_organizations_account" "security" {
+  email     = "conzymaher+demo-security@gmail.com"
+  name      = "conzy-demo-security"
+  parent_id = aws_organizations_organizational_unit.protected.id
+  tags = {
+    environment = "security"
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_organizations_account" "sandbox" {
+  email     = "conzymaher+demo-sandbox@gmail.com"
+  name      = "conzy-demo-sandbox"
+  parent_id = aws_organizations_organizational_unit.development.id
+  tags = {
+    environment = "sandbox"
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+}
