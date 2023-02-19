@@ -22,10 +22,11 @@ resource "github_repository" "terraform_module_template" {
 # Defines _this_ repo we are currently using. Inception. Deleting this resource is the equivalent of dragging and
 # dropping the My Computer icon into the Recycling Bin https://media.tenor.com/EWZCUGkCcIsAAAAd/old-man-my-computer.gif
 resource "github_repository" "terraform_demo" {
-  name               = "terraform-demo"
-  description        = "A repo to demonstrate a complete Terraform Demo"
-  visibility         = "private"
-  archive_on_destroy = true
+  name                   = "terraform-demo"
+  delete_branch_on_merge = true
+  description            = "A repo to demonstrate a complete Terraform Demo"
+  visibility             = "private"
+  archive_on_destroy     = true
   lifecycle {
     prevent_destroy = true
   }

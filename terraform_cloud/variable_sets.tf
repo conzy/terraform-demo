@@ -1,3 +1,5 @@
+# Note these are all populated in Terraform Cloud
+
 resource "tfe_variable_set" "terraform_cloud_token" {
   name         = "Terraform Cloud Token"
   description  = "The token that allows us to interact with Terraform Cloud."
@@ -19,5 +21,11 @@ resource "tfe_variable_set" "github_token" {
 resource "tfe_variable_set" "slack" {
   name         = "Slack Webhook URL"
   description  = "Used for Terraform Cloud Slack integration."
+  organization = tfe_organization.organization.id
+}
+
+resource "tfe_variable_set" "cloudflare" {
+  name         = "Cloudflare Token"
+  description  = "Cloudflare API Token"
   organization = tfe_organization.organization.id
 }
