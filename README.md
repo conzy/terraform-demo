@@ -7,10 +7,22 @@ A complete demo of a terraformed AWS environment suitable for a startup with Ter
 ### Pragmatic
 
 We are taking a pragmatic approach to terraform. We are aiming for very high infrastructure as code coverage.
-Sometimes the last 5% of coverage can be difficult. We will strive for 100% coverage and document where we cant.
+Sometimes the last 5% of coverage can be difficult. We will strive for 100% coverage and document where we can't.
 
 Its possible to make terraform code more DRY by adopting tooling such as terragrunt. We are willing to make the
 configuration a little bit more verbose to keep the tooling and workflow simple.
+
+### Well Architected
+
+The [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected) particularly the 
+[Security Pillars](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) are front of mind when
+designing the project. 
+
+The [Scott Piper AWS Security Maturity Roadmap](https://summitroute.com/downloads/aws_security_maturity_roadmap-Summit_Route.pdf) is
+also an excellent with pragmatic and actionable advice.
+
+> This demo may not have exhaustive coverage of everything outlined in the framework but it's a good starting point.
+
 
 ### Building on the shoulders of giants
 
