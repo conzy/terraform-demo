@@ -10,7 +10,7 @@ terraform {
 provider "aws" {
   region = "eu-west-1"
   assume_role {
-    role_arn = "arn:aws:iam::103317967445:role/terraform"
+    role_arn = "arn:aws:iam::671953853133:role/terraform"
   }
 }
 
@@ -19,7 +19,7 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "conzy-demo"
     workspaces {
-      name = "security_core"
+      name = "production_core"
     }
   }
 }
@@ -27,6 +27,6 @@ terraform {
 module "core" {
   source            = "app.terraform.io/conzy-demo/modules/aws//modules/core"
   version           = "0.0.1"
-  name              = "conzy-demo-security"
+  name              = "conzy-demo-production"
   trusted_role_arns = ["arn:aws:iam::332594793360:user/terraform"]
 }
