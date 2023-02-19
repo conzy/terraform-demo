@@ -44,10 +44,10 @@ will only change a handful of times per year. You end up with a cadence / worklo
 As the custodians of the cloud it's important for us to create an environment that strikes that ideal balance between risk
 and agility for the organisation. The last thing we want is some workload that bundles an RDS Cluster with a Lambda app
 and some poor junior engineer updates a single line of Python which causes a production outage because there
-was a hidden RDS Engine Upgrade lurking in the `terraform plan`
+was a hidden RDS Engine upgrade lurking in the `terraform plan`
 
 More workspaces has some management overhead, you'll sometimes need to share information between workspaces, you'll sometimes
-need to update resources in multiple files. But uou _cannot_ put a price on the operational safety you gain.
+need to update resources in multiple files. But you _cannot_ put a price on the operational safety you gain.
 
 ### KISS
 

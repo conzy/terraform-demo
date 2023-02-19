@@ -11,7 +11,6 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-
 resource "aws_organizations_organization" "management" {
   aws_service_access_principals = [
     "cloudtrail.amazonaws.com",
