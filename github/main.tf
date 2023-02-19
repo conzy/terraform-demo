@@ -11,6 +11,16 @@ provider "github" {
   token = var.github_token
 }
 
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "conzy-demo"
+    workspaces {
+      name = "github"
+    }
+  }
+}
+
 # Defines a template repo that we use to cookie-cutter our terraform module repos
 resource "github_repository" "terraform_module_template" {
   name        = "terraform-module-template"

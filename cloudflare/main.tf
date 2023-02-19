@@ -11,6 +11,16 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "conzy-demo"
+    workspaces {
+      name = "cloudflare"
+    }
+  }
+}
+
 data "cloudflare_zone" "conormaher_com" {
   name = "conormaher.com"
 }
