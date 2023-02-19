@@ -2,6 +2,17 @@
 
 A complete demo of a terraformed AWS environment suitable for a startup with Terraform Cloud Orchestration
 
+## Repos
+
+| Repo                                               | Description                                                            |
+|----------------------------------------------------|------------------------------------------------------------------------|
+| https://github.com/conzy/terraform-demo            | This repo. Orchestrates everything                                     |
+| https://github.com/conzy/terraform-module-template | A template repo that all other terraform module repos are created from |
+| https://github.com/conzy/terraform-aws-s3          | An opinionated S3 module with sane defaults and naming convention.     |
+| https://github.com/conzy/terraform-tfe-modules     | Providers helper functions for Terraform Cloud.                        |
+| https://github.com/conzy/terraform-aws-modules     | Provides helper modules for AWS infra.                                 |
+| https://github.com/conzy/terraform-aws-networking  | Provides a complete VPC                                                |
+| https://github.com/conzy/terraform-aws-app         | Provides a module that encapsulates a workload / app                   |
 ## Design Principals
 
 ### Pragmatic

@@ -17,4 +17,5 @@ module "security_core" {
   working_directory = "aws/security/core"
   tag_names         = ["aws", "conzy-demo-security"]
   description       = "This workspace manages state for security core infra."
+  execution_mode    = "local"
 }

@@ -21,6 +21,7 @@ module "meta" {
   working_directory = "terraform_cloud"
   tag_names         = ["terraform", "conzy-demo", "tfe"]
   description       = "This workspace manages state for our Terraform Cloud configuration."
+  execution_mode    = "local"
 }
 
 # GitHub

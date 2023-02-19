@@ -9,6 +9,19 @@ terraform {
 
 provider "aws" {
   region = "eu-west-1"
+  //  assume_role {
+  //    role_arn = "arn:aws:iam::332594793360:role/terraform"
+  //  }
+}
+
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "conzy-demo"
+    workspaces {
+      name = "management_organizations"
+    }
+  }
 }
 
 resource "aws_organizations_organization" "management" {

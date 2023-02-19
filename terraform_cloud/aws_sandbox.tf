@@ -39,4 +39,5 @@ module "sandbox_core" {
   working_directory = "aws/sandbox/core"
   tag_names         = ["aws", "conzy-demo-sandbox"]
   description       = "This workspace manages state for sandbox core infra."
+  execution_mode    = "local"
 }

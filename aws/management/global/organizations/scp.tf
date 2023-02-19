@@ -3,7 +3,7 @@ data "aws_iam_policy_document" "foundational_scp" {
   statement {
     sid       = "DenyLeavingOrgs"
     effect    = "Deny"
-    actions   = ["organizations:LeaveOrganization"]
+    actions   = ["organizations:LeaveOrganization"] # Hotel California
     resources = ["*"]
   }
   statement {
@@ -17,14 +17,75 @@ data "aws_iam_policy_document" "foundational_scp" {
   }
   statement {
     sid       = "DenyRootAccount"
+    effect    = "Deny"
     actions   = ["*"]
     resources = ["*"]
-    effect    = "Deny"
     condition {
       test     = "StringLike"
       variable = "aws:PrincipalArn"
       values   = ["arn:aws:iam::*:root"]
     }
+  }
+  statement {
+    sid       = "RequireImdsV2"
+    effect    = "Deny"
+    actions   = ["ec2:RunInstances"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+
+    condition {
+      test     = "StringNotEquals"
+      variable = "ec2:MetadataHttpTokens"
+      values   = ["required"]
+    }
+  }
+  statement {
+    sid       = "DenyModifyInstanceMetadata"
+    effect    = "Deny"
+    actions   = ["ec2:ModifyInstanceMetadataOptions"]
+    resources = ["*"]
+  }
+  statement {
+    sid       = "MaxImdsHopLimit"
+    effect    = "Deny"
+    actions   = ["ec2:RunInstances"]
+    resources = ["arn:aws:ec2:*:*:instance/*"]
+
+    condition {
+      test     = "NumericGreaterThan"
+      variable = "ec2:MetadataHttpPutResponseHopLimit"
+      values   = ["1"]
+    }
+  }
+  statement {
+    sid    = "DenyDisableSecurity"
+    effect = "Deny"
+    actions = [
+      "access-analyzer:DeleteAnalyzer",
+      "ec2:DisableEbsEncryptionByDefault",
+      "s3:PutAccountPublicAccessBlock"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    sid    = "DenyDisableSecurityTools"
+    effect = "Deny"
+    actions = [
+      "guardduty:DeleteDetector",
+      "guardduty:DisassociateFromMasterAccount",
+      "guardduty:UpdateDetector",
+      "guardduty:CreateFilter",
+      "guardduty:CreateIPSet",
+      "config:DeleteConfigRule",
+      "config:DeleteConfigurationRecorder",
+      "config:DeleteDeliveryChannel",
+      "config:StopConfigurationRecorder",
+      "cloudtrail:StopLogging",
+      "cloudtrail:DeleteTrail",
+      "securityhub:DeleteInvitations",
+      "securityhub:DisableSecurityHub",
+      "securityhub:DisassociateFromMasterAccount",
+    ]
+    resources = ["*"]
   }
 }
 
