@@ -57,3 +57,18 @@ resource "github_branch_protection" "terraform_demo_protection" {
   }
 }
 
+# Lets add some collaborators!
+locals {
+  collaborators = {
+    eoinsha  = "pull"
+    pelger   = "pull"
+    lmammino = "pull"
+  }
+}
+
+resource "github_repository_collaborator" "collaborators" {
+  for_each   = local.collaborators
+  repository = github_repository.terraform_demo.id
+  username   = each.key
+  permission = each.value
+}
