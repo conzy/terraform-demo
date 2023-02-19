@@ -52,5 +52,6 @@ module "terraform_aws_app" {
   enforce_admins = false
   description    = "Provides a module that encapsulates a workload / app"
   visibility     = "public"
+  check_contexts = ["lint", "integration"] # Require linting and integration tests to pass
   oauth_token_id = local.oauth_token_id
 }

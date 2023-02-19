@@ -1,0 +1,2 @@
+# Don't check in the playground dir as we just use it for local experimentation.
+playground

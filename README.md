@@ -88,3 +88,45 @@ This repo manages resources across:
 - Terraform Cloud
 - GitHub
 - CloudFlare
+
+## GitHub OpenID Connect AWS Integration
+
+While all AWS Orchestration from this repo happens in Terraform Cloud. I want to be able to run intergration tests against
+a real AWS account.
+
+As we know IAM Users are the root of all evil. We can configure AWS to trust GitHub's OIDC as a federated identity, we
+can then have fine-grained access at the repo level, or even at the branch / tag level to a role in an AWS Account!
+
+There is even a great [community module](https://registry.terraform.io/modules/unfunco/oidc-github/aws/latest) to allow this
+
+```hcl
+module "oidc_github" {
+  source  = "unfunco/oidc-github/aws"
+  version = "1.2.1"
+
+  github_repositories = [
+    "conzy/terraform-aws-app:pull_request",
+  ]
+}
+```
+
+## Work In Progress
+
+What is not yet done but coming soon
+
+### GuardDuty and Security Hub
+
+These are both very easy to setup with terraform but I don't have AWS Config or CloudTrail complete for this demo yet
+
+### CloudTrail
+
+CloudTrail [delegated administrator support](https://aws.amazon.com/about-aws/whats-new/2022/11/aws-cloudtrail-delegated-account-support-aws-organizations/)
+arrived in relatively recently in November 2022 and I have not had a chance to play with it yet. This is great because this can now be controlled
+from our Security Account rather than the management account. 
+
+### Config
+
+AWS Config supports delegated administration and an Aggregator can be created in your Security account.
+
+Delegated admin for all the services mentioned above is enabled in
+[aws/management/glboal/organizations/delegation.tf](aws/management/global/organizations/delegation.tf)

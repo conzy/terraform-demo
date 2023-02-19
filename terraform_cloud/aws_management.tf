@@ -14,6 +14,9 @@ module "management_organizations" {
   variable_sets = [
     tfe_variable_set.aws_iam_user.id,
   ]
+  remote_state_consumer_ids = [
+    module.security_core.workspace_id
+  ]
   working_directory = "aws/management/global/organizations"
   tag_names         = ["aws", "conzy-demo-management", "organizations"]
   description       = "This workspace manages AWS Organizations in management account."
