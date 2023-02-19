@@ -19,6 +19,16 @@ provider "github" {
   token = var.github_token
 }
 
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "conzy-demo"
+    workspaces {
+      name = "tfe_workspace"
+    }
+  }
+}
+
 locals {
   oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
 }

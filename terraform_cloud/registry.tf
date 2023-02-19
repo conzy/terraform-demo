@@ -34,3 +34,23 @@ module "terraform_aws_modules" {
   visibility     = "public"
   oauth_token_id = local.oauth_token_id
 }
+
+module "terraform_aws_networking" {
+  source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
+  version        = "0.0.2"
+  name           = "terraform-aws-networking"
+  enforce_admins = false
+  description    = "Provides a complete VPC"
+  visibility     = "public"
+  oauth_token_id = local.oauth_token_id
+}
+
+module "terraform_aws_app" {
+  source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
+  version        = "0.0.2"
+  name           = "terraform-aws-app"
+  enforce_admins = false
+  description    = "Provides a module that encapsulates a workload / app"
+  visibility     = "public"
+  oauth_token_id = local.oauth_token_id
+}
