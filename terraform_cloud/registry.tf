@@ -1,10 +1,3 @@
-module "test_module" {
-  source         = "../../terraform-tfe-modules//modules/registry"
-  name           = "terraform-tfe-foobar"
-  oauth_token_id = local.oauth_token_id
-  enforce_admins = false
-}
-
 module "terraform_tfe_modules" {
   source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
   version        = "0.0.2"

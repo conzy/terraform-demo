@@ -39,7 +39,6 @@ module "production_core" {
   working_directory = "aws/production/core"
   tag_names         = ["aws", "conzy-demo-production"]
   description       = "This workspace manages state for production core infra."
-  execution_mode    = "local"
 }
 
 module "production_vpc" {

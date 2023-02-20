@@ -40,7 +40,6 @@ module "staging_core" {
   working_directory = "aws/staging/core"
   tag_names         = ["aws", "conzy-demo-staging"]
   description       = "This workspace manages state for staging core infra."
-  execution_mode    = "local"
 }
 
 module "staging_vpc" {

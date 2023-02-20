@@ -2,17 +2,6 @@
 
 A complete demo of a terraformed AWS environment suitable for a startup with Terraform Cloud Orchestration
 
-## Repos
-
-| Repo                                               | Description                                                            |
-|----------------------------------------------------|------------------------------------------------------------------------|
-| https://github.com/conzy/terraform-demo            | This repo. Orchestrates everything                                     |
-| https://github.com/conzy/terraform-module-template | A template repo that all other terraform module repos are created from |
-| https://github.com/conzy/terraform-aws-s3          | An opinionated S3 module with sane defaults and naming convention.     |
-| https://github.com/conzy/terraform-tfe-modules     | Providers helper functions for Terraform Cloud.                        |
-| https://github.com/conzy/terraform-aws-modules     | Provides helper modules for AWS infra.                                 |
-| https://github.com/conzy/terraform-aws-networking  | Provides a complete VPC                                                |
-| https://github.com/conzy/terraform-aws-app         | Provides a module that encapsulates a workload / app                   |
 ## Design Principals
 
 ### Pragmatic
@@ -29,11 +18,10 @@ The [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-ar
 [Security Pillars](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) are front of mind when
 designing the project. 
 
-The [Scott Piper AWS Security Maturity Roadmap](https://summitroute.com/downloads/aws_security_maturity_roadmap-Summit_Route.pdf) is
-also an excellent with pragmatic and actionable advice.
+The Scott Piper [AWS Security Maturity Roadmap](https://summitroute.com/downloads/aws_security_maturity_roadmap-Summit_Route.pdf) is
+also an excellent guide with pragmatic and actionable advice.
 
 > This demo may not have exhaustive coverage of everything outlined in the framework but it's a good starting point.
-
 
 ### Building on the shoulders of giants
 
@@ -55,17 +43,17 @@ will only change a handful of times per year. You end up with a cadence / worklo
 
 | Workload             | Update Cadence             | Risk   |
 |----------------------|----------------------------|--------|
-| Core IAM             | 1-2 times ever             | High   |
+| Core IAM / Security  | 1-2 times ever             | High   |
 | Core Route53 Config  | 1-2 times per year         | Medium |
 | VPC                  | 3-4 times per year         | Medium |
 | RDS                  | 12 times per year          | High   |
-| S3                   | 36 times per year          | Medium |
+| S3                   | handful of times per month | Medium |
 | EC2 / ALB Workloads  | handful of times per month | Low    |
 | Stateless Workloads  | dozens of times per month  | Low    |
 | Serverless Workloads | dozens of times per week   | Low    |
 
 As the custodians of the cloud it's important for us to create an environment that strikes that ideal balance between risk
-and agility for the organisation. The last thing we want is some workload that bundles an RDS Cluster with a Lambda app
+and agility for the business. The last thing we want is some workload that bundles an RDS Cluster with a Lambda app
 and some poor junior engineer updates a single line of Python which causes a production outage because there
 was a hidden RDS Engine upgrade lurking in the `terraform plan`
 
@@ -74,8 +62,9 @@ need to update resources in multiple files. But you _cannot_ put a price on the 
 
 ### KISS
 
-Keep it simple stupid. It can be tempting to write "clever" terraform modules with lots of magic and configuration. These
-modules tend to be difficult to modify / upgrade / refactor and you can often paint yourself into a corner.
+Keep it simple stupid. It can be tempting to write "clever" terraform modules with lots of magic that are highly configurable. 
+These modules can be difficult to reason about and tend to be difficult to modify / upgrade / refactor. You can often paint yourself 
+into a corner.
 
 We prefer a little more verbosity over complex / clever modules. e.g sometimes it is better to write two modules and have
 each solve one problem well, even if this leads to some repetition.
@@ -105,10 +94,22 @@ module "oidc_github" {
   version = "1.2.1"
 
   github_repositories = [
-    "conzy/terraform-aws-app:pull_request",
+    "conzy/terraform-aws-app:*",
   ]
 }
 ```
+
+## Repos used in this demo
+
+| Repo                                               | Description                                                            |
+|----------------------------------------------------|------------------------------------------------------------------------|
+| https://github.com/conzy/terraform-demo            | This repo. Orchestrates everything                                     |
+| https://github.com/conzy/terraform-module-template | A template repo that all other terraform module repos are created from |
+| https://github.com/conzy/terraform-aws-s3          | An opinionated S3 module with sane defaults and naming convention.     |
+| https://github.com/conzy/terraform-tfe-modules     | Providers helper functions for Terraform Cloud.                        |
+| https://github.com/conzy/terraform-aws-modules     | Provides helper modules for AWS infra.                                 |
+| https://github.com/conzy/terraform-aws-networking  | Provides a complete VPC                                                |
+| https://github.com/conzy/terraform-aws-app         | Provides a module that encapsulates a workload / app                   |
 
 ## Work In Progress
 
@@ -121,8 +122,8 @@ These are both very easy to setup with terraform but I don't have AWS Config or 
 ### CloudTrail
 
 CloudTrail [delegated administrator support](https://aws.amazon.com/about-aws/whats-new/2022/11/aws-cloudtrail-delegated-account-support-aws-organizations/)
-arrived in relatively recently in November 2022 and I have not had a chance to play with it yet. This is great because this can now be controlled
-from our Security Account rather than the management account. 
+arrived relatively recently in November 2022, and I have not had a chance to play with it yet. This is great because this 
+can now be controlled from our Security Account rather than the management account. 
 
 ### Config
 
@@ -130,3 +131,8 @@ AWS Config supports delegated administration and an Aggregator can be created in
 
 Delegated admin for all the services mentioned above is enabled in
 [aws/management/glboal/organizations/delegation.tf](aws/management/global/organizations/delegation.tf)
+
+### CIS AWS Foundations Benchmark
+
+The [CIS AWS Foundations Benchmark](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-cis-controls-1.4.0.html)
+defines a lot of sensible security controls. AWS Security Hub can track your compliance.

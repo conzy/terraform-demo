@@ -20,7 +20,6 @@ module "management_organizations" {
   working_directory = "aws/management/global/organizations"
   tag_names         = ["aws", "conzy-demo-management", "organizations"]
   description       = "This workspace manages AWS Organizations in management account."
-  execution_mode    = "local"
 }
 
 module "management_iam" {
@@ -42,7 +41,6 @@ module "management_iam" {
   working_directory = "aws/management/global/iam"
   tag_names         = ["aws", "conzy-demo-management", "iam"]
   description       = "This workspace manages IAM in management account."
-  execution_mode    = "local"
 }
 
 module "management_core" {
@@ -64,5 +62,4 @@ module "management_core" {
   working_directory = "aws/management/core"
   tag_names         = ["aws", "conzy-demo-management"]
   description       = "This workspace manages state for management core infra."
-  execution_mode    = "local"
 }

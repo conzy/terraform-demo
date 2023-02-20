@@ -39,5 +39,17 @@ module "sandbox_core" {
   working_directory = "aws/sandbox/core"
   tag_names         = ["aws", "conzy-demo-sandbox"]
   description       = "This workspace manages state for sandbox core infra."
+}
+
+# Remote state only
+module "sandbox_playground" {
+  source            = "app.terraform.io/conzy-demo/modules/tfe//modules/workspace"
+  version           = "0.0.1"
+  name              = "sandbox_playground"
+  terraform_version = "1.3.9"
+  organization      = tfe_organization.organization.id
+  teams             = {}
   execution_mode    = "local"
+  tag_names         = ["aws", "conzy-demo-sandbox", "playground"]
+  description       = "This workspace manage state only. Its for local terraform runs"
 }
