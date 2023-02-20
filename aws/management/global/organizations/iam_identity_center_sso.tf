@@ -44,6 +44,54 @@ resource "aws_identitystore_user" "bob" {
   }
 }
 
+resource "aws_identitystore_user" "luciano" {
+  identity_store_id = local.identity_store_id
+
+  display_name = "Luciano Mammino"
+  user_name    = "luciano"
+
+  name {
+    given_name  = "Luciano"
+    family_name = "Mammino"
+  }
+
+  emails {
+    value = "luciano.mammino@fourtheorem.com"
+  }
+}
+
+resource "aws_identitystore_user" "peter" {
+  identity_store_id = local.identity_store_id
+
+  display_name = "Peter Elger"
+  user_name    = "peter"
+
+  name {
+    given_name  = "Peter"
+    family_name = "Elger"
+  }
+
+  emails {
+    value = "peter.elger@fourtheorem.com"
+  }
+}
+
+resource "aws_identitystore_user" "eoin" {
+  identity_store_id = local.identity_store_id
+
+  display_name = "Eoin Shanaghy"
+  user_name    = "eoin"
+
+  name {
+    given_name  = "Eoin"
+    family_name = "Shanaghy"
+  }
+
+  emails {
+    value = "eoin.shanaghy@fourtheorem.com"
+  }
+}
+
 # Groups
 resource "aws_identitystore_group" "super_admin" {
   display_name      = "Super Admin"
@@ -78,7 +126,10 @@ locals {
     bob = aws_identitystore_user.bob.user_id
   }
   security = {
-    bob = aws_identitystore_user.bob.user_id
+    bob     = aws_identitystore_user.bob.user_id
+    luciano = aws_identitystore_user.luciano.user_id
+    peter   = aws_identitystore_user.peter.user_id
+    eoin    = aws_identitystore_user.eoin.user_id
   }
   finance = {
     conor = aws_identitystore_user.conor.user_id
