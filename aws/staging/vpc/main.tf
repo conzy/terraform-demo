@@ -29,3 +29,4 @@ module "vpc" {
   version           = "0.0.1"
   high_availability = false # Less NAT Gateways, More pizza money
 }
+

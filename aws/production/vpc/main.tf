@@ -23,3 +23,5 @@ terraform {
     }
   }
 }
+
+# TODO Deploy VPC here during demo
