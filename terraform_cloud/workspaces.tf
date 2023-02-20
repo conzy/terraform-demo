@@ -1,4 +1,3 @@
-
 # This creates the workspace which manages _this_ workspace
 module "meta" {
   source            = "app.terraform.io/conzy-demo/modules/tfe//modules/workspace"
@@ -21,10 +20,7 @@ module "meta" {
   working_directory = "terraform_cloud"
   tag_names         = ["terraform", "conzy-demo", "tfe"]
   description       = "This workspace manages state for our Terraform Cloud configuration."
-  execution_mode    = "local"
 }
-
-# GitHub
 
 module "github" {
   source            = "app.terraform.io/conzy-demo/modules/tfe//modules/workspace"
@@ -46,8 +42,6 @@ module "github" {
   tag_names         = ["github"]
   description       = "This workspace manages core GitHub resources."
 }
-
-# Cloudflare
 
 module "cloudflare" {
   source            = "app.terraform.io/conzy-demo/modules/tfe//modules/workspace"

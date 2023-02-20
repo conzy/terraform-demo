@@ -1,10 +1,3 @@
-module "test_module" {
-  source         = "../../terraform-tfe-modules//modules/registry"
-  name           = "terraform-tfe-foobar"
-  oauth_token_id = local.oauth_token_id
-  enforce_admins = false
-}
-
 module "terraform_tfe_modules" {
   source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
   version        = "0.0.2"
@@ -52,5 +45,6 @@ module "terraform_aws_app" {
   enforce_admins = false
   description    = "Provides a module that encapsulates a workload / app"
   visibility     = "public"
+  check_contexts = ["lint", "integration"] # Require linting and integration tests to pass
   oauth_token_id = local.oauth_token_id
 }

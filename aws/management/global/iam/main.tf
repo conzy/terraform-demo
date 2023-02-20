@@ -11,9 +11,9 @@ terraform {
 
 provider "aws" {
   region = "eu-west-1"
-  //  assume_role {
-  //    role_arn = "arn:aws:iam::332594793360:role/terraform"
-  //  }
+  assume_role {
+    role_arn = "arn:aws:iam::332594793360:role/terraform"
+  }
 }
 
 terraform {
@@ -35,15 +35,11 @@ resource "aws_iam_user" "terraform" {
   }
 }
 
-# Here we can use the organization data source to compute all our accounts We can use this to generate a list of
+# Here we can use the organization data source to compute all our accounts. We can use this to generate a list of
 # terraform roles that should be assumable.
 locals {
   all_accounts           = data.aws_organizations_organization.this.accounts
   target_terraform_roles = [for account in local.all_accounts : "arn:aws:iam::${account.id}:role/terraform"]
-}
-
-output "roles" {
-  value = local.target_terraform_roles
 }
 
 # We attach policies via a group as per CIS Standard
