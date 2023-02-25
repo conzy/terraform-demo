@@ -92,6 +92,22 @@ resource "aws_identitystore_user" "eoin" {
   }
 }
 
+resource "aws_identitystore_user" "michael" {
+  identity_store_id = local.identity_store_id
+
+  display_name = "Michael Twomey"
+  user_name    = "michael"
+
+  name {
+    given_name  = "Michael"
+    family_name = "Twomey"
+  }
+
+  emails {
+    value = "michael.twomey@fourtheorem.com"
+  }
+}
+
 # Groups
 resource "aws_identitystore_group" "super_admin" {
   display_name      = "Super Admin"
@@ -130,6 +146,7 @@ locals {
     luciano = aws_identitystore_user.luciano.user_id
     peter   = aws_identitystore_user.peter.user_id
     eoin    = aws_identitystore_user.eoin.user_id
+    michael = aws_identitystore_user.michael.user_id
   }
   finance = {
     conor = aws_identitystore_user.conor.user_id
