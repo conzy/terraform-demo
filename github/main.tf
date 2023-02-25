@@ -60,9 +60,10 @@ resource "github_branch_protection" "terraform_demo_protection" {
 # Lets add some collaborators!
 locals {
   collaborators = {
-    eoinsha  = "pull"
-    pelger   = "pull"
-    lmammino = "pull"
+    eoinsha    = "pull"
+    pelger     = "pull"
+    lmammino   = "pull"
+    micktwomey = "pull"
   }
 }
 
