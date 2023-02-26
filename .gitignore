@@ -30,3 +30,6 @@ override.tf.json
 
 # IDE Files
 .idea
+
+# macOS
+.DS_Store
