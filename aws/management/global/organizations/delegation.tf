@@ -9,12 +9,6 @@ resource "aws_organizations_delegated_administrator" "config" {
   service_principal = "config.amazonaws.com"
 }
 
-# Delegate cloudtrail admin
-resource "aws_organizations_delegated_administrator" "cloudtrail" {
-  account_id        = aws_organizations_account.security.id
-  service_principal = "cloudtrail.amazonaws.com"
-}
-
 # Delegate Security Hub admin
 resource "aws_securityhub_organization_admin_account" "this" {
   admin_account_id = aws_organizations_account.security.id

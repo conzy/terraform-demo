@@ -25,8 +25,21 @@ terraform {
 }
 
 module "core" {
-  source            = "app.terraform.io/conzy-demo/modules/aws//modules/core"
-  version           = "0.0.1"
-  name              = "conzy-demo-security"
-  trusted_role_arns = ["arn:aws:iam::332594793360:user/terraform"]
+  source             = "app.terraform.io/conzy-demo/modules/aws//modules/core"
+  version            = "0.0.2"
+  config_bucket_name = module.security.config_bucket_name
+  name               = "conzy-demo-security"
+  trusted_role_arns  = ["arn:aws:iam::332594793360:user/terraform"]
+}
+
+module "security" {
+  source  = "app.terraform.io/conzy-demo/modules/aws//modules/security_account"
+  version = "0.0.2"
+  #TODO These can be retrieved from remote state
+  management_account_id = "332594793360"
+  organization_accounts = [
+    "854268402788",
+    "782190888228",
+    "671953853133",
+  ]
 }

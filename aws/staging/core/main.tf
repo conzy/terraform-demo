@@ -25,8 +25,9 @@ terraform {
 }
 
 module "core" {
-  source            = "app.terraform.io/conzy-demo/modules/aws//modules/core"
-  version           = "0.0.1"
-  name              = "conzy-demo-staging"
-  trusted_role_arns = ["arn:aws:iam::332594793360:user/terraform"]
+  source             = "app.terraform.io/conzy-demo/modules/aws//modules/core"
+  version            = "0.0.2"
+  name               = "conzy-demo-staging"
+  config_bucket_name = "conzy-demo-security-eu-west-1-config"
+  trusted_role_arns  = ["arn:aws:iam::332594793360:user/terraform"]
 }

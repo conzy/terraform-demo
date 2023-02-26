@@ -111,26 +111,33 @@ module "oidc_github" {
 | https://github.com/conzy/terraform-aws-networking  | Provides a complete VPC                                                |
 | https://github.com/conzy/terraform-aws-app         | Provides a module that encapsulates a workload / app                   |
 
-## Work In Progress
+## Security Services
 
-What is not yet done but coming soon
+### Cloudtrail
+
+CloudTrail [delegated administrator support](https://aws.amazon.com/about-aws/whats-new/2022/11/aws-cloudtrail-delegated-account-support-aws-organizations/)
+arrived relatively recently in November 2022. However, there are still issues related to the implementation with terraform
+see issue [here](https://github.com/hashicorp/terraform-provider-aws/issues/28440)
+
+For that reason I have arrived at a solution which I think is a good compromise. There is a Cloutrail Organization trail
+in the management account, this monitors all accounts and regions. It creates a Cloudwatch Log Group in the management
+account which is very convenient for investigating via Cloudwatch Logs Insights. I have also configured Cloudtrail to log
+to an S3 bucket in the Security account so that logs are also stored outside of the management account and security teams
+could investigate those logs in the Security account.
 
 ### GuardDuty and Security Hub
 
-These are both very easy to setup with terraform but I don't have AWS Config or CloudTrail complete for this demo yet
-
-### CloudTrail
-
-CloudTrail [delegated administrator support](https://aws.amazon.com/about-aws/whats-new/2022/11/aws-cloudtrail-delegated-account-support-aws-organizations/)
-arrived relatively recently in November 2022, and I have not had a chance to play with it yet. This is great because this 
-can now be controlled from our Security Account rather than the management account. 
+The Security Account is designated as the delegated administrator for both GuardDuty and Security Hub.
 
 ### Config
 
-AWS Config supports delegated administration and an Aggregator can be created in your Security account.
+AWS Config is deployed in each account via our `core` module, it logs to a centralised bucket in the security account.
+There is also an aggregator in the Config account.
 
-Delegated admin for all the services mentioned above is enabled in
-[aws/management/glboal/organizations/delegation.tf](aws/management/global/organizations/delegation.tf)
+
+## Work In Progress
+
+What is not yet done but coming soon
 
 ### CIS AWS Foundations Benchmark
 
@@ -404,3 +411,16 @@ sso_role_name=view_only
 ```
 
 Note how this is a view only role. It makes sense to operate as safe roles and only elevate your priviliges when absolutely neccessary. All changes should be via Terraform Cloud. For safety even though I would typically have access to highly privilged roles I will comment them out or remove them from my profile to avoid accidental usage!
+
+# Security Account and Security Services
+
+Created many [helper modules](https://github.com/conzy/terraform-aws-modules/pull/2) for the management account and security
+account that enabled:
+
+- Cloudtrail Organisation Trail
+- AWS Config
+- AWS Config Aggregator
+- AWS GuardDuty
+- AWS Security Hub
+
+Added to our `core` module which is deployed in each account to add AWS Config to the other sensible defaults.
