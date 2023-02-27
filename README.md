@@ -424,3 +424,11 @@ account that enabled:
 - AWS Security Hub
 
 Added to our `core` module which is deployed in each account to add AWS Config to the other sensible defaults.
+
+## Billing
+
+The root account and some Click Ops is required to enable billing access. I then created a permission set that allows
+access to billing in the management account. I strongly believe _everyone_ should have access to AWS Cost Explorer. In
+the new serverless paradigm, technical and business decisions can have huge impact on the AWS bill, its important that
+every engineer is empowered to see the impact their technical decisions have on the cost, the AWS bill should not be a secret.
+I have found giving finance teams access to the billing Console also makes their lives easier.
