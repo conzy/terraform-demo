@@ -23,6 +23,15 @@ data "aws_iam_policy_document" "billing" {
     ]
     resources = ["*"]
   }
+  statement {
+    sid = "LegacyPermissions"
+    actions = [
+      "aws-portal:ViewUsage",
+      "aws-portal:ViewBilling",
+      "aws-portal:ViewAccount",
+    ]
+    resources = ["*"]
+  }
 }
 
 # Billing
