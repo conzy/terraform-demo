@@ -63,6 +63,12 @@ resource "aws_identitystore_group" "engineers" {
   identity_store_id = local.identity_store_id
 }
 
+resource "aws_identitystore_group" "finance" {
+  display_name      = "Finance"
+  description       = "A group for people who need access to billing"
+  identity_store_id = local.identity_store_id
+}
+
 # Group Membership
 locals {
   super_admins = {
@@ -73,6 +79,10 @@ locals {
   }
   security = {
     bob = aws_identitystore_user.bob.user_id
+  }
+  finance = {
+    conor = aws_identitystore_user.conor.user_id
+    bob   = aws_identitystore_user.bob.user_id
   }
 }
 
