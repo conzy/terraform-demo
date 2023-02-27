@@ -108,6 +108,22 @@ resource "aws_identitystore_user" "michael" {
   }
 }
 
+resource "aws_identitystore_user" "fiona" {
+  identity_store_id = local.identity_store_id
+
+  display_name = "Fiona McKenna"
+  user_name    = "fiona"
+
+  name {
+    given_name  = "Fiona"
+    family_name = "McKenna"
+  }
+
+  emails {
+    value = "fiona.mckenna@fourtheorem.com"
+  }
+}
+
 # Groups
 resource "aws_identitystore_group" "super_admin" {
   display_name      = "Super Admin"
@@ -150,6 +166,7 @@ locals {
   }
   finance = {
     conor = aws_identitystore_user.conor.user_id
+    fiona = aws_identitystore_user.fiona.user_id
     bob   = aws_identitystore_user.bob.user_id
   }
 }
