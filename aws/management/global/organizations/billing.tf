@@ -43,7 +43,7 @@ resource "aws_ssoadmin_account_assignment" "finance_billing_management" {
   instance_arn       = local.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.billing.arn
 
-  principal_id   = aws_identitystore_group.finance.id
+  principal_id   = aws_identitystore_group.finance.group_id
   principal_type = "GROUP"
 
   target_id   = local.management_account_id
