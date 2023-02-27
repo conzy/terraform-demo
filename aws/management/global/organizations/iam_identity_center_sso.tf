@@ -107,6 +107,13 @@ resource "aws_identitystore_group_membership" "security" {
   member_id         = each.value
 }
 
+resource "aws_identitystore_group_membership" "finance" {
+  for_each          = local.finance
+  identity_store_id = local.identity_store_id
+  group_id          = aws_identitystore_group.finance.group_id
+  member_id         = each.value
+}
+
 # Permissions Sets
 ## View Only
 resource "aws_ssoadmin_permission_set" "view_only" {
