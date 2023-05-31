@@ -24,8 +24,8 @@ terraform {
   }
 }
 
-module "vpc" {
-  source            = "app.terraform.io/conzy-demo/networking/aws"
-  version           = "0.0.1"
-  high_availability = false # Less NAT Gateways, More pizza money
-}
+# module "vpc" {
+#   source            = "app.terraform.io/conzy-demo/networking/aws"
+#   version           = "0.0.1"
+#   high_availability = false # Less NAT Gateways, More pizza money
+# }
