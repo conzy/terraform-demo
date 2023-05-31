@@ -55,3 +55,31 @@ module "terraform_group" {
     aws_iam_user.terraform.name
   ]
 }
+
+data "aws_s3_bucket" "org_formation_bucket" {
+  bucket = "organization-formation-332594793360"
+}
+
+data "aws_iam_policy_document" "s3" {
+  statement {
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "${data.aws_s3_bucket.org_formation_bucket.arn}/organization.yml"
+    ]
+  }
+}
+
+module "oidc_github" {
+  source  = "unfunco/oidc-github/aws"
+  version = "1.2.1"
+
+  github_repositories = [
+    "conzy/actions-playground:*",
+  ]
+  attach_read_only_policy = false
+  iam_role_inline_policies = {
+    org-formation-state = data.aws_iam_policy_document.s3.json
+  }
+}
