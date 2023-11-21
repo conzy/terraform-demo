@@ -49,10 +49,10 @@ module "terraform_aws_app" {
   oauth_token_id = local.oauth_token_id
 }
 
-module "terraform_aws_alb" {
+module "terraform_aws_demo" {
   source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
   version        = "0.0.2"
-  name           = "terraform-aws-alb"
+  name           = "terraform-aws-demo"
   enforce_admins = false
   description    = "This is a demo repo / module for the South East User Group"
   visibility     = "public"
