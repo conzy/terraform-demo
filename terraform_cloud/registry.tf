@@ -48,3 +48,14 @@ module "terraform_aws_app" {
   check_contexts = ["lint", "integration"] # Require linting and integration tests to pass
   oauth_token_id = local.oauth_token_id
 }
+
+module "terraform_aws_alb" {
+  source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
+  version        = "0.0.2"
+  name           = "terraform-aws-alb"
+  enforce_admins = false
+  description    = "This is a demo repo / module for the South East User Group"
+  visibility     = "public"
+  check_contexts = ["lint"]
+  oauth_token_id = local.oauth_token_id
+}
