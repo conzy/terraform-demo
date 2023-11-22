@@ -59,3 +59,14 @@ module "terraform_aws_demo" {
   check_contexts = ["lint"]
   oauth_token_id = local.oauth_token_id
 }
+
+module "terraform_aws_foo" {
+  source         = "app.terraform.io/conzy-demo/modules/tfe//modules/registry"
+  version        = "0.0.2"
+  name           = "terraform-aws-foo"
+  enforce_admins = false
+  description    = "This is a foo demo"
+  visibility     = "public"
+  check_contexts = ["lint"]
+  oauth_token_id = local.oauth_token_id
+}
